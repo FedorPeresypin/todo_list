@@ -37,7 +37,9 @@ class GroupFormWidgetBody extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.done),
-        onPressed: () => GroupFormWidgetModelProvider.of(context)?.model.saveGroup(context),
+        onPressed: () {
+          GroupFormWidgetModelProvider.of(context)?.model.saveGroup(context);
+        },
       ),
     );
   }

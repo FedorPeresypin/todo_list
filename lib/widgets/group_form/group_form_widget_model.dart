@@ -1,11 +1,18 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:todo_list/domain/entity/group.dart';
 
 class GroupFormWidgetModel {
   String groupName = '';
-  void saveGroup(BuildContext context) {
-    log(groupName);
+
+  void saveGroup(BuildContext context) async {
+    if (groupName.isEmpty) return;
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(GroupAdapter());
+    }
+    final box = await Hive.openBox<Group>('group_box');
+    final group = Group(name: groupName);
+    await box.add(group);
     Navigator.of(context).pop();
   }
 }
