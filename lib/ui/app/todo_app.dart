@@ -21,7 +21,7 @@ class TodoApp extends StatelessWidget {
         initialRoute: '/groups',
         routes: {
           '/groups': (context) => const GroupScreen(),
-          '/groups/form': (context) => const GroupsAddScreen(),
+          '/groups/form': (context) => GroupsAddScreen(),
         },
       ),
     );

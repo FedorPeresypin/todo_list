@@ -7,5 +7,8 @@ class Group {
   @HiveField(0)
   String name;
 
-  Group({required this.name});
+  @HiveField(1)
+  int indexGroup;
+
+  Group({required this.name, required this.indexGroup});
 }

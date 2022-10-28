@@ -15,7 +15,7 @@ class GroupScreen extends StatelessWidget {
       body: const _GroupListWidget(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () => context.read<GroupsViewModel>().showForm(context),
+        onPressed: () => Navigator.of(context).pushNamed('/groups/form'),
       ),
     );
   }
@@ -26,13 +26,9 @@ class _GroupListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final groupsCount = Provider.of<GroupsViewModel>(context).groups.length;
+    final groupsCount = context.watch<GroupsViewModel>().groups.length;
     return ListView.builder(
-      itemBuilder: (context, index) => Dismissible(
-        key: UniqueKey(),
-        child: _GroupListRowWidget(indexInList: index),
-        onDismissed: (direction) => context.read<GroupsViewModel>().deleteGroup(index),
-      ),
+      itemBuilder: (context, index) => _GroupListRowWidget(indexInList: index),
       itemCount: groupsCount,
     );
   }
@@ -48,7 +44,11 @@ class _GroupListRowWidget extends StatelessWidget {
     return Card(
       child: ListTile(
         title: Text(group.name),
-        subtitle: const Text('26.10.2022'),
+        subtitle: Text(group.indexGroup.toString()),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: () => context.read<GroupsViewModel>().deleteGroup(indexInList),
+        ),
       ),
     );
   }
