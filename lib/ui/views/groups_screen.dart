@@ -53,17 +53,17 @@ class _GroupListRowWidget extends StatelessWidget {
       secondaryBackground: Padding(
         padding: const EdgeInsets.all(3.0),
         child: Container(
-          color: const Color.fromARGB(69, 244, 67, 54),
+          color: Colors.red,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: const [
-              SizedBox(
-                width: 20,
-              ),
               Icon(
                 Icons.delete,
                 color: Colors.white,
                 size: 50,
+              ),
+              SizedBox(
+                width: 20,
               ),
             ],
           ),
@@ -72,7 +72,7 @@ class _GroupListRowWidget extends StatelessWidget {
       background: Padding(
         padding: const EdgeInsets.all(3.0),
         child: Container(
-          color: const Color.fromARGB(69, 64, 195, 255),
+          color: Colors.blue,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: const [
@@ -88,14 +88,12 @@ class _GroupListRowWidget extends StatelessWidget {
           ),
         ),
       ),
+      onDismissed: (direction) => context.read<GroupsViewModel>().deleteGroup(indexInList),
       child: Card(
         child: ListTile(
           title: Text(group.name),
           subtitle: Text(group.indexGroup.toString()),
-          trailing: IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () => context.read<GroupsViewModel>().deleteGroup(indexInList),
-          ),
+          onTap: () => context.read<GroupsViewModel>().showTasks(indexInList),
         ),
       ),
     );

@@ -55,4 +55,9 @@ class GroupsViewModel with ChangeNotifier {
     _groups.insert(newIndex, reorderGroup);
     _updateGroup();
   }
+
+  void showTasks(int groupIndex) {
+    final groupKey = box.keyAt(groupIndex);
+    log("$groupIndex -- $groupKey");
+  }
 }
