@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list/business_logic/viewmodels/groups_viewmodel.dart';
-import 'package:todo_list/ui/views/groups_add_screen.dart';
-import 'package:todo_list/ui/views/groups_screen.dart';
+import 'package:todo_list/ui/views/group/groups_add_screen.dart';
+import 'package:todo_list/ui/views/group/groups_screen.dart';
+import 'package:todo_list/ui/views/task/task_add_screen.dart';
+import 'package:todo_list/ui/views/task/tasks_screem.dart';
 
 class TodoApp extends StatelessWidget {
   const TodoApp({super.key});
@@ -22,6 +24,8 @@ class TodoApp extends StatelessWidget {
         routes: {
           '/groups': (context) => const GroupScreen(),
           '/groups/form': (context) => GroupsAddScreen(),
+          '/groups/tasks': (context) => const TasksScreen(),
+          '/groups/tasks/form': (context) => TaskAddScreen()
         },
       ),
     );

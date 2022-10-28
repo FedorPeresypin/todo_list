@@ -93,7 +93,10 @@ class _GroupListRowWidget extends StatelessWidget {
         child: ListTile(
           title: Text(group.name),
           subtitle: Text(group.indexGroup.toString()),
-          onTap: () => context.read<GroupsViewModel>().showTasks(indexInList),
+          onTap: () {
+            context.read<GroupsViewModel>().showTasks(indexInList);
+            Navigator.of(context).pushNamed('/groups/tasks');
+          },
         ),
       ),
     );
