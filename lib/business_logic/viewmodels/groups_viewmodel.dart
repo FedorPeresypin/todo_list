@@ -17,7 +17,6 @@ class GroupsViewModel with ChangeNotifier {
       Hive.registerAdapter(GroupAdapter());
     }
     box = await Hive.openBox<Group>('group_box');
-    box.clear();
     showGroups();
   }
 
@@ -32,8 +31,7 @@ class GroupsViewModel with ChangeNotifier {
 
   void deleteGroup(int groupIndex) async {
     await box.deleteAt(groupIndex);
-    await updateGroup();
-    notifyListeners();
+    _updateGroup();
   }
 
   void saveGroup(String groupName) async {
@@ -42,12 +40,19 @@ class GroupsViewModel with ChangeNotifier {
     await box.add(group);
   }
 
-  Future<void> updateGroup() async {
+  void _updateGroup() async {
     int i = 0;
     await box.clear();
     for (var element in groups) {
       await box.add(Group(name: element.name, indexGroup: i));
       i++;
     }
+  }
+
+  void reorderGroup(int oldIndex, int newIndex) async {
+    if (newIndex > oldIndex) newIndex--;
+    final reorderGroup = _groups.removeAt(oldIndex);
+    _groups.insert(newIndex, reorderGroup);
+    _updateGroup();
   }
 }

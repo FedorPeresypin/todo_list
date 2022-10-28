@@ -27,27 +27,75 @@ class _GroupListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final groupsCount = context.watch<GroupsViewModel>().groups.length;
-    return ListView.builder(
-      itemBuilder: (context, index) => _GroupListRowWidget(indexInList: index),
-      itemCount: groupsCount,
+    return Theme(
+      data: ThemeData(
+        canvasColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+      ),
+      child: ReorderableListView.builder(
+        itemBuilder: (context, index) => _GroupListRowWidget(key: Key('$index'), indexInList: index),
+        itemCount: groupsCount,
+        onReorder: (oldIndex, newIndex) => context.read<GroupsViewModel>().reorderGroup(oldIndex, newIndex),
+      ),
     );
   }
 }
 
 class _GroupListRowWidget extends StatelessWidget {
   final int indexInList;
-  const _GroupListRowWidget({required this.indexInList});
+  const _GroupListRowWidget({Key? key, required this.indexInList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final group = context.watch<GroupsViewModel>().groups[indexInList];
-    return Card(
-      child: ListTile(
-        title: Text(group.name),
-        subtitle: Text(group.indexGroup.toString()),
-        trailing: IconButton(
-          icon: const Icon(Icons.delete),
-          onPressed: () => context.read<GroupsViewModel>().deleteGroup(indexInList),
+    return Dismissible(
+      key: Key('$indexInList'),
+      secondaryBackground: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: Container(
+          color: const Color.fromARGB(69, 244, 67, 54),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              SizedBox(
+                width: 20,
+              ),
+              Icon(
+                Icons.delete,
+                color: Colors.white,
+                size: 50,
+              ),
+            ],
+          ),
+        ),
+      ),
+      background: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: Container(
+          color: const Color.fromARGB(69, 64, 195, 255),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const [
+              SizedBox(
+                width: 20,
+              ),
+              Icon(
+                Icons.settings,
+                color: Colors.white,
+                size: 50,
+              ),
+            ],
+          ),
+        ),
+      ),
+      child: Card(
+        child: ListTile(
+          title: Text(group.name),
+          subtitle: Text(group.indexGroup.toString()),
+          trailing: IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () => context.read<GroupsViewModel>().deleteGroup(indexInList),
+          ),
         ),
       ),
     );
