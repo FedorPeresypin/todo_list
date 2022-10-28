@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo_list/widgets/app/todo_app.dart';
+import 'package:todo_list/ui/app/todo_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
