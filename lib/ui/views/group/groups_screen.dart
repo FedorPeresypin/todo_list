@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list/business_logic/viewmodels/groups_viewmodel.dart';
+import 'package:todo_list/business_logic/viewmodels/task_viewmodel.dart';
 
 class GroupScreen extends StatelessWidget {
   const GroupScreen({super.key});
@@ -94,8 +95,7 @@ class _GroupListRowWidget extends StatelessWidget {
           title: Text(group.name),
           subtitle: Text(group.indexGroup.toString()),
           onTap: () {
-            context.read<GroupsViewModel>().showTasks(indexInList);
-            Navigator.of(context).pushNamed('/groups/tasks');
+            context.read<TaskViewModel>().showTasks(context, indexGroup: indexInList);
           },
         ),
       ),

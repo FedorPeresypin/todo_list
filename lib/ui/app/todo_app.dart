@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list/business_logic/viewmodels/groups_viewmodel.dart';
+import 'package:todo_list/business_logic/viewmodels/task_viewmodel.dart';
 import 'package:todo_list/ui/views/group/groups_add_screen.dart';
 import 'package:todo_list/ui/views/group/groups_screen.dart';
 import 'package:todo_list/ui/views/task/task_add_screen.dart';
@@ -14,6 +15,7 @@ class TodoApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => GroupsViewModel()),
+        ChangeNotifierProvider(create: (_) => TaskViewModel()),
       ],
       child: MaterialApp(
         title: 'TODO App',

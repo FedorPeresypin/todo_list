@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:todo_list/business_logic/entity/task.dart';
 
 part 'group.g.dart';
 
@@ -10,5 +11,8 @@ class Group {
   @HiveField(1)
   int indexGroup;
 
-  Group({required this.name, required this.indexGroup});
+  @HiveField(2)
+  HiveList<Task>? tasks;
+
+  Group({required this.name, required this.indexGroup, this.tasks});
 }
