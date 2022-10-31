@@ -29,7 +29,7 @@ class GroupsViewModel with ChangeNotifier {
     });
   }
 
-  void deleteGroup(int groupIndex) async {
+  Future<void> deleteGroup(int groupIndex) async {
     await box.deleteAt(groupIndex);
     _updateGroup();
   }

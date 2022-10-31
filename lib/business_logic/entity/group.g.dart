@@ -19,8 +19,7 @@ class GroupAdapter extends TypeAdapter<Group> {
     return Group(
       name: fields[0] as String,
       indexGroup: fields[1] as int,
-      tasks: (fields[2] as HiveList?)?.castHiveList(),
-    );
+    )..tasks = (fields[2] as HiveList?)?.castHiveList();
   }
 
   @override

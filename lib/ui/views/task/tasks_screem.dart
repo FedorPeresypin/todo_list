@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_list/business_logic/entity/task.dart';
+import 'package:todo_list/business_logic/viewmodels/task_viewmodel.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
@@ -7,7 +10,7 @@ class TasksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Group name'),
+        title: Text(context.watch<TaskViewModel>().group.name),
         centerTitle: true,
       ),
       body: const _TaskListWidget(),
@@ -21,30 +24,39 @@ class TasksScreen extends StatelessWidget {
 
 class _TaskListWidget extends StatelessWidget {
   const _TaskListWidget();
-
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
-        canvasColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-      ),
-      child: ListView.builder(
-        itemBuilder: (context, index) => _TaskListRowWidget(key: Key('$index'), indexInList: index),
-        itemCount: 7,
-      ),
-    );
+    final tasks = context.watch<TaskViewModel>().group.tasks;
+    if (tasks == null) {
+      return const Center(
+        child: Text('Задач пока нет'),
+      );
+    } else {
+      return Theme(
+        data: ThemeData(
+          canvasColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+        ),
+        child: ListView.builder(
+          itemBuilder: (context, index) => _TaskListRowWidget(
+            key: Key(index.toString()),
+            task: tasks[index],
+          ),
+          itemCount: tasks.length,
+        ),
+      );
+    }
   }
 }
 
 class _TaskListRowWidget extends StatelessWidget {
-  final int indexInList;
-  const _TaskListRowWidget({Key? key, required this.indexInList}) : super(key: key);
+  final Task task;
+  const _TaskListRowWidget({Key? key, required this.task}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('$indexInList'),
+      key: UniqueKey(),
       secondaryBackground: Padding(
         padding: const EdgeInsets.all(3.0),
         child: Container(
@@ -83,10 +95,10 @@ class _TaskListRowWidget extends StatelessWidget {
           ),
         ),
       ),
-      //onDismissed: (direction) => context.read<GroupsViewModel>().deleteGroup(indexInList),
-      child: const Card(
+      onDismissed: (direction) => context.read<TaskViewModel>().deleteTask(task),
+      child: Card(
         child: ListTile(
-          title: Text('task'),
+          title: Text(task.name),
         ),
       ),
     );

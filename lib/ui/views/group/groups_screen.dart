@@ -89,13 +89,13 @@ class _GroupListRowWidget extends StatelessWidget {
           ),
         ),
       ),
-      onDismissed: (direction) => context.read<GroupsViewModel>().deleteGroup(indexInList),
+      onDismissed: (direction) async => await context.read<GroupsViewModel>().deleteGroup(indexInList),
       child: Card(
         child: ListTile(
           title: Text(group.name),
           subtitle: Text(group.indexGroup.toString()),
           onTap: () {
-            context.read<TaskViewModel>().showTasks(context, indexGroup: indexInList);
+            context.read<TaskViewModel>().showTasks(context, group: group);
           },
         ),
       ),

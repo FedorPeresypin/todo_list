@@ -7,4 +7,7 @@ class Task extends HiveObject {
   @HiveField(0)
   String name;
   Task({required this.name});
+
+  @override
+  String toString() => name;
 }

@@ -4,7 +4,7 @@ import 'package:todo_list/business_logic/entity/task.dart';
 part 'group.g.dart';
 
 @HiveType(typeId: 1)
-class Group {
+class Group extends HiveObject {
   @HiveField(0)
   String name;
 
@@ -14,5 +14,10 @@ class Group {
   @HiveField(2)
   HiveList<Task>? tasks;
 
-  Group({required this.name, required this.indexGroup, this.tasks});
+  Group({required this.name, required this.indexGroup});
+
+  @override
+  String toString() {
+    return 'name: $name, tasks: $tasks';
+  }
 }

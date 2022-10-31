@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_list/business_logic/entity/task.dart';
+import 'package:todo_list/business_logic/viewmodels/task_viewmodel.dart';
 
 class TaskAddScreen extends StatelessWidget {
   TaskAddScreen({super.key});
@@ -25,7 +28,7 @@ class TaskAddScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.done),
         onPressed: () {
-          //context.read<GroupsViewModel>().saveGroup(controller.text);
+          context.read<TaskViewModel>().addTask(Task(name: controller.text));
           Navigator.of(context).pop();
         },
       ),
