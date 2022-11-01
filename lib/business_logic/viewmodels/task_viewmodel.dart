@@ -36,5 +36,11 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void changeTask(Task task) async {
+    task.changetask();
+    await task.save();
+    notifyListeners();
+  }
+
   void deleteTask(Task task) async {}
 }

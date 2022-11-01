@@ -6,7 +6,12 @@ part 'task.g.dart';
 class Task extends HiveObject {
   @HiveField(0)
   String name;
+  @HiveField(1)
+  bool isDone = false;
   Task({required this.name});
+  void changetask() {
+    isDone = !isDone;
+  }
 
   @override
   String toString() => name;

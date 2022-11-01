@@ -93,7 +93,6 @@ class _GroupListRowWidget extends StatelessWidget {
       child: Card(
         child: ListTile(
           title: Text(group.name),
-          subtitle: Text(group.indexGroup.toString()),
           onTap: () {
             context.read<TaskViewModel>().showTasks(context, group: group);
           },

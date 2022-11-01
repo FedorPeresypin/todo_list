@@ -97,9 +97,7 @@ class _TaskListRowWidget extends StatelessWidget {
       ),
       onDismissed: (direction) => context.read<TaskViewModel>().deleteTask(task),
       child: Card(
-        child: ListTile(
-          title: Text(task.name),
-        ),
+        child: ListTile(title: Text(task.name), trailing: Checkbox(value: task.isDone, onChanged: (value) => context.read<TaskViewModel>().changeTask(task))),
       ),
     );
   }
