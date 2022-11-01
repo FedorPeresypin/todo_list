@@ -14,7 +14,7 @@ class Group extends HiveObject {
   @HiveField(2)
   HiveList<Task>? tasks;
 
-  Group({required this.name, required this.indexGroup});
+  Group({required this.name, required this.indexGroup, this.tasks});
 
   @override
   String toString() {

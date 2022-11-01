@@ -50,7 +50,7 @@ class _GroupListRowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final group = context.watch<GroupsViewModel>().groups[indexInList];
     return Dismissible(
-      key: Key('$indexInList'),
+      key: UniqueKey(),
       secondaryBackground: Padding(
         padding: const EdgeInsets.all(3.0),
         child: Container(
