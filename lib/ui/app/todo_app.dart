@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list/business_logic/bloc/group_bloc.dart';
+import 'package:todo_list/business_logic/bloc/group_event.dart';
 import 'package:todo_list/business_logic/viewmodels/groups_viewmodel.dart';
 import 'package:todo_list/business_logic/viewmodels/task_viewmodel.dart';
 import 'package:todo_list/ui/views/group/groups_add_screen.dart';
@@ -12,23 +15,30 @@ class TodoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => GroupsViewModel()),
-        ChangeNotifierProvider(create: (_) => TaskViewModel()),
-      ],
-      child: MaterialApp(
-        title: 'TODO App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+        BlocProvider<GroupBloc>(
+          create: (BuildContext context) => GroupBloc()..add(GroupInitialiseEvent()),
         ),
-        initialRoute: '/groups',
-        routes: {
-          '/groups': (context) => const GroupScreen(),
-          '/groups/form': (context) => GroupsAddScreen(),
-          '/groups/tasks': (context) => const TasksScreen(),
-          '/groups/tasks/form': (context) => TaskAddScreen()
-        },
+      ],
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => GroupsViewModel()),
+          ChangeNotifierProvider(create: (_) => TaskViewModel()),
+        ],
+        child: MaterialApp(
+          title: 'TODO App',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          initialRoute: '/groups',
+          routes: {
+            '/groups': (context) => const GroupScreen(),
+            '/groups/form': (context) => GroupsAddScreen(),
+            '/groups/tasks': (context) => const TasksScreen(),
+            '/groups/tasks/form': (context) => TaskAddScreen()
+          },
+        ),
       ),
     );
   }

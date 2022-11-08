@@ -1,7 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_list/business_logic/viewmodels/groups_viewmodel.dart';
 import 'package:todo_list/business_logic/viewmodels/task_viewmodel.dart';
+
+import '../../../business_logic/bloc/group_bloc.dart';
+import '../../../business_logic/bloc/group_state.dart';
 
 class GroupScreen extends StatelessWidget {
   const GroupScreen({super.key});
@@ -13,7 +18,30 @@ class GroupScreen extends StatelessWidget {
         title: const Text('Groups todolists'),
         centerTitle: true,
       ),
-      body: const _GroupListWidget(),
+      body: BlocBuilder<GroupBloc, GroupState>(
+        builder: (context, state) {
+          if (state is GroupLoadingState) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (state is GroupEmptyState) {
+            return const Center(
+              child: Text('Task list is empty'),
+            );
+          }
+          if (state is GroupLoadedState) {
+            log(state.groups.toString());
+            return const _GroupListWidget();
+          }
+          if (state is GroupErrorState) {
+            return const Center(
+              child: Text('Error'),
+            );
+          }
+          throw Exception('Что-то пошло не так...');
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () => Navigator.of(context).pushNamed('/groups/form'),
