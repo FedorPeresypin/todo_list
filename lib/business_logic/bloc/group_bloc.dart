@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_list/business_logic/bloc/group_event.dart';
 import 'package:todo_list/business_logic/bloc/group_state.dart';
@@ -15,8 +18,17 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
         if (groups.isEmpty) emit(GroupEmptyState());
         emit(GroupLoadedState(groups: groups));
       } catch (e) {
-        emit(GroupErrorState());
+        emit(GroupErrorState()); 
       }
     });
+
+    on<GroupDeleteEvent>(
+      (event, emit) async {
+        await _groupDataProvider.deleteGroup(event.indexGroup);
+        List<Group> groups = await _groupDataProvider.getGroups();
+        if (groups.isEmpty) emit(GroupEmptyState());
+        emit(GroupLoadedState(groups: groups));
+      },
+    );
   }
 }

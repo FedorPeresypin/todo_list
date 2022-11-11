@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_list/business_logic/bloc/group_event.dart';
 import 'package:todo_list/business_logic/viewmodels/groups_viewmodel.dart';
 import 'package:todo_list/business_logic/viewmodels/task_viewmodel.dart';
 
@@ -20,6 +21,9 @@ class GroupScreen extends StatelessWidget {
       ),
       body: BlocBuilder<GroupBloc, GroupState>(
         builder: (context, state) {
+          if (state is GroupLoadedState) {
+            return _GroupListWidget(state: state);
+          }
           if (state is GroupLoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -29,10 +33,6 @@ class GroupScreen extends StatelessWidget {
             return const Center(
               child: Text('Task list is empty'),
             );
-          }
-          if (state is GroupLoadedState) {
-            log(state.groups.toString());
-            return const _GroupListWidget();
           }
           if (state is GroupErrorState) {
             return const Center(
@@ -51,19 +51,23 @@ class GroupScreen extends StatelessWidget {
 }
 
 class _GroupListWidget extends StatelessWidget {
-  const _GroupListWidget();
+  final GroupLoadedState state;
+  const _GroupListWidget({required this.state});
 
   @override
   Widget build(BuildContext context) {
-    final groupsCount = context.watch<GroupsViewModel>().groups.length;
     return Theme(
       data: ThemeData(
         canvasColor: Colors.transparent,
         shadowColor: Colors.transparent,
       ),
       child: ReorderableListView.builder(
-        itemBuilder: (context, index) => _GroupListRowWidget(key: Key('$index'), indexInList: index),
-        itemCount: groupsCount,
+        itemBuilder: (context, index) => _GroupListRowWidget(
+          key: Key('$index'),
+          index: index,
+          state: state,
+        ),
+        itemCount: state.groups.length,
         onReorder: (oldIndex, newIndex) => context.read<GroupsViewModel>().reorderGroup(oldIndex, newIndex),
       ),
     );
@@ -71,12 +75,12 @@ class _GroupListWidget extends StatelessWidget {
 }
 
 class _GroupListRowWidget extends StatelessWidget {
-  final int indexInList;
-  const _GroupListRowWidget({Key? key, required this.indexInList}) : super(key: key);
+  final int index;
+  final GroupLoadedState state;
+  const _GroupListRowWidget({Key? key, required this.index, required this.state}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final group = context.watch<GroupsViewModel>().groups[indexInList];
     return Dismissible(
       key: UniqueKey(),
       secondaryBackground: Padding(
@@ -117,12 +121,12 @@ class _GroupListRowWidget extends StatelessWidget {
           ),
         ),
       ),
-      onDismissed: (direction) async => await context.read<GroupsViewModel>().deleteGroup(indexInList),
+      onDismissed: (direction) => context.read<GroupBloc>().add(GroupDeleteEvent(indexGroup: index)),
       child: Card(
         child: ListTile(
-          title: Text(group.name),
+          title: Text(state.groups[index].name),
           onTap: () {
-            context.read<TaskViewModel>().showTasks(context, group: group);
+            context.read<TaskViewModel>().showTasks(context, group: state.groups[index]);
           },
         ),
       ),
