@@ -61,14 +61,23 @@ class _GroupListWidget extends StatelessWidget {
         canvasColor: Colors.transparent,
         shadowColor: Colors.transparent,
       ),
-      child: ReorderableListView.builder(
+      child:
+          // ListView.builder(
+          //   itemBuilder: (context, index) => _GroupListRowWidget(
+          //     key: Key('$index'),
+          //     index: index,
+          //     state: state,
+          //   ),
+          //   itemCount: state.groups.length,
+          // )
+          ReorderableListView.builder(
         itemBuilder: (context, index) => _GroupListRowWidget(
           key: Key('$index'),
           index: index,
           state: state,
         ),
         itemCount: state.groups.length,
-        onReorder: (oldIndex, newIndex) => {},
+        onReorder: (oldIndex, newIndex) => context.read<GroupBloc>().add(GroupReorderEvent(oldIndex: oldIndex, newIndex: newIndex)),
       ),
     );
   }

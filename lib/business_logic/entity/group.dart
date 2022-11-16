@@ -18,6 +18,6 @@ class Group extends HiveObject {
 
   @override
   String toString() {
-    return 'name: $name, tasks: $tasks';
+    return 'name: $name';
   }
 }

@@ -10,7 +10,11 @@ class GroupDeleteEvent extends GroupEvent {
   GroupDeleteEvent({required this.indexGroup});
 }
 
-class GroupReorderEvent extends GroupEvent {}
+class GroupReorderEvent extends GroupEvent {
+  int oldIndex;
+  int newIndex;
+  GroupReorderEvent({required this.newIndex, required this.oldIndex});
+}
 
 class GroupEditEvent extends GroupEvent {}
 
