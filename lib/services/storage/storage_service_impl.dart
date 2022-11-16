@@ -35,4 +35,14 @@ class StorageServiceImpl implements StorageService {
     final box = await Hive.openBox<Group>('group_box');
     await box.putAt(indexGroup, group);
   }
+
+  @override
+  Future<Group> getGroup(int index) async {
+    final box = await Hive.openBox<Group>('group_box');
+    final group = box.getAt(index);
+    if (group != null) {
+      return group;
+    }
+    throw Exception('Индекс $index отсутствует');
+  }
 }

@@ -7,6 +7,9 @@ import 'package:todo_list/ui/views/group/groups_screen.dart';
 import 'package:todo_list/ui/views/task/task_add_screen.dart';
 import 'package:todo_list/ui/views/task/tasks_screem.dart';
 
+import '../../business_logic/bloc/group_edit/group_edit_bloc.dart';
+import '../views/group/group_edit_screen.dart';
+
 class TodoApp extends StatelessWidget {
   const TodoApp({super.key});
 
@@ -16,6 +19,9 @@ class TodoApp extends StatelessWidget {
       providers: [
         BlocProvider<GroupBloc>(
           create: (BuildContext context) => GroupBloc()..add(GroupInitialiseEvent()),
+        ),
+        BlocProvider<GroupEditBloc>(
+          create: (BuildContext context) => GroupEditBloc(),
         ),
       ],
       child: MaterialApp(
@@ -27,6 +33,7 @@ class TodoApp extends StatelessWidget {
         routes: {
           '/groups': (context) => const GroupScreen(),
           '/groups/form': (context) => GroupsAddScreen(),
+          '/groups/edit': (context) => GroupEditScreen(),
           '/groups/tasks': (context) => const TasksScreen(),
           '/groups/tasks/form': (context) => TaskAddScreen()
         },

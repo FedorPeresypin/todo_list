@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../business_logic/bloc/group_edit/group_edit_bloc.dart';
 import '../../../business_logic/bloc/group_event.dart';
-import '../../../business_logic/viewmodels/task_viewmodel.dart';
 import '../../../business_logic/bloc/group_bloc.dart';
 import '../../../business_logic/bloc/group_state.dart';
 
@@ -57,16 +57,7 @@ class _GroupListWidget extends StatelessWidget {
         canvasColor: Colors.transparent,
         shadowColor: Colors.transparent,
       ),
-      child:
-          // ListView.builder(
-          //   itemBuilder: (context, index) => _GroupListRowWidget(
-          //     key: Key('$index'),
-          //     index: index,
-          //     state: state,
-          //   ),
-          //   itemCount: state.groups.length,
-          // )
-          ReorderableListView.builder(
+      child: ReorderableListView.builder(
         itemBuilder: (context, index) => _GroupListRowWidget(
           key: Key('$index'),
           index: index,
@@ -126,12 +117,24 @@ class _GroupListRowWidget extends StatelessWidget {
           ),
         ),
       ),
-      onDismissed: (direction) => context.read<GroupBloc>().add(GroupDeleteEvent(indexGroup: index)),
+      confirmDismiss: (direction) async {
+        if (direction == DismissDirection.startToEnd) {
+          Navigator.of(context).pushNamed('/groups/edit');
+          context.read<GroupEditBloc>().add(GroupShowEditorEvent(indexGroup: index));
+          return false;
+        }
+        return true;
+      },
+      onDismissed: (direction) {
+        if (direction == DismissDirection.endToStart) {
+          context.read<GroupBloc>().add(GroupDeleteEvent(indexGroup: index));
+        }
+      },
       child: Card(
         child: ListTile(
           title: Text(state.groups[index].name),
           onTap: () {
-            context.read<TaskViewModel>().showTasks(context, group: state.groups[index]);
+            // context.read<TaskViewModel>().showTasks(context, group: state.groups[index]);
           },
         ),
       ),

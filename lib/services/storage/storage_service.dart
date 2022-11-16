@@ -2,6 +2,7 @@ import '../../business_logic/entity/group.dart';
 
 abstract class StorageService {
   Future<List<Group>> getGroups();
+  Future<Group> getGroup(int index);
   Future<void> saveGroup(Group group);
   Future<void> deleteGroup(int groupIndex);
   Future<void> updateGroupList({required List<Group> groupList});

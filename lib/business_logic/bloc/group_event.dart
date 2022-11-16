@@ -16,6 +16,4 @@ class GroupReorderEvent extends GroupEvent {
   GroupReorderEvent({required this.newIndex, required this.oldIndex});
 }
 
-class GroupEditEvent extends GroupEvent {}
-
 class GroupInitialiseEvent extends GroupEvent {}
