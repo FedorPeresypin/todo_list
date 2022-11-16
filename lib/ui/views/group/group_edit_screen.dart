@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_list/business_logic/bloc/group_bloc.dart';
 
 import '../../../business_logic/bloc/group_edit/group_edit_bloc.dart';
+import '../../../business_logic/bloc/group_event.dart';
 import '../../../business_logic/bloc/group_state.dart';
 
 class GroupEditScreen extends StatelessWidget {
@@ -33,7 +35,9 @@ class GroupEditScreen extends StatelessWidget {
             floatingActionButton: FloatingActionButton(
               child: const Icon(Icons.done),
               onPressed: () {
+                context.read<GroupEditBloc>().add(GroupChangeEvent(name: controller.text));
                 Navigator.of(context).pop();
+                context.read<GroupBloc>().add(GroupInitialiseEvent());
               },
             ),
           );

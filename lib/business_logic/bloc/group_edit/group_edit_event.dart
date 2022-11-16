@@ -8,3 +8,8 @@ class GroupShowEditorEvent extends GroupEditEvent {
   int indexGroup;
   GroupShowEditorEvent({required this.indexGroup});
 }
+
+class GroupChangeEvent extends GroupEditEvent {
+  String name;
+  GroupChangeEvent({required this.name});
+}

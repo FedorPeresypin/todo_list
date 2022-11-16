@@ -119,8 +119,8 @@ class _GroupListRowWidget extends StatelessWidget {
       ),
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.startToEnd) {
-          Navigator.of(context).pushNamed('/groups/edit');
           context.read<GroupEditBloc>().add(GroupShowEditorEvent(indexGroup: index));
+          Navigator.of(context).pushNamed('/groups/edit');
           return false;
         }
         return true;
