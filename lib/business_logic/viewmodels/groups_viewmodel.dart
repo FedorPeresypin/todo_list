@@ -40,21 +40,21 @@ class GroupsViewModel with ChangeNotifier {
   //   await box.add(group);
   // }
 
-  // void _updateGroup() async {
-  //   int i = 0;
-  //   await box.clear();
-  //   for (var element in groups) {
-  //     await box.add(Group(name: element.name, indexGroup: i, tasks: element.tasks));
-  //     i++;
-  //   }
-  // }
+  void _updateGroup() async {
+    int i = 0;
+    await box.clear();
+    for (var element in groups) {
+      await box.add(Group(name: element.name, tasks: element.tasks));
+      i++;
+    }
+  }
 
-  // void reorderGroup(int oldIndex, int newIndex) async {
-  //   if (newIndex > oldIndex) newIndex--;
-  //   final reorderGroup = _groups.removeAt(oldIndex);
-  //   _groups.insert(newIndex, reorderGroup);
-  //   _updateGroup();
-  // }
+  void reorderGroup(int oldIndex, int newIndex) async {
+    if (newIndex > oldIndex) newIndex--;
+    final reorderGroup = _groups.removeAt(oldIndex);
+    _groups.insert(newIndex, reorderGroup);
+    _updateGroup();
+  }
 
   void showTasks(int groupIndex) {
     final groupKey = box.keyAt(groupIndex);

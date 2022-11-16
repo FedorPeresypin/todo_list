@@ -8,10 +8,10 @@ import 'package:todo_list/services/storage/storage_service_impl.dart';
 
 class GroupBloc extends Bloc<GroupEvent, GroupState> {
   final _groupDataProvider = StorageServiceImpl();
-  late List<Group> groups;
+  late List<Group> groupList;
   GroupBloc() : super(GroupEmptyState()) {
     on<GroupInitialiseEvent>((event, emit) async {
-      groups = await _groupDataProvider.getGroups();
+      groupList = await _groupDataProvider.getGroups();
       emit(GroupLoadingState());
       try {
         List<Group> groups = await _groupDataProvider.getGroups();
@@ -25,9 +25,9 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
     on<GroupDeleteEvent>(
       (event, emit) async {
         await _groupDataProvider.deleteGroup(event.indexGroup);
-        groups = await _groupDataProvider.getGroups();
-        if (groups.isEmpty) emit(GroupEmptyState());
-        emit(GroupLoadedState(groups: groups));
+        groupList = await _groupDataProvider.getGroups();
+        if (groupList.isEmpty) emit(GroupEmptyState());
+        emit(GroupLoadedState(groups: groupList));
       },
     );
 
@@ -36,16 +36,20 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
         if (event.name.isEmpty) return;
         final group = Group(name: event.name);
         await _groupDataProvider.saveGroup(group);
-        groups = await _groupDataProvider.getGroups();
-        emit(GroupLoadedState(groups: groups));
+        groupList = await _groupDataProvider.getGroups();
+        emit(GroupLoadedState(groups: groupList));
       },
     );
 
     on<GroupReorderEvent>(
       (event, emit) async {
-        log('event');
-        final groups = await _groupDataProvider.reorderGrops(newIndex: event.newIndex, oldIndex: event.oldIndex);
-        emit(GroupLoadedState(groups: groups));
+        var newIndex = event.newIndex;
+        var oldIndex = event.oldIndex;
+        if (newIndex > oldIndex) newIndex--;
+        final reorderGroup = groupList.removeAt(oldIndex);
+        groupList.insert(newIndex, reorderGroup);
+        emit(GroupLoadedState(groups: groupList));
+        _groupDataProvider.updateGroupList(groupList: groupList);
       },
     );
   }
