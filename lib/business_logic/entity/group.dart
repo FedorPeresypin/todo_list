@@ -8,13 +8,13 @@ class Group extends HiveObject {
   @HiveField(0)
   String name;
 
-  @HiveField(1)
-  int indexGroup;
+  // @HiveField(1)
+  // int indexGroup;
 
   @HiveField(2)
   HiveList<Task>? tasks;
 
-  Group({required this.name, required this.indexGroup, this.tasks});
+  Group({required this.name, this.tasks});
 
   @override
   String toString() {

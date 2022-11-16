@@ -29,32 +29,32 @@ class GroupsViewModel with ChangeNotifier {
     });
   }
 
-  Future<void> deleteGroup(int groupIndex) async {
-    await box.deleteAt(groupIndex);
-    _updateGroup();
-  }
+  // Future<void> deleteGroup(int groupIndex) async {
+  //   await box.deleteAt(groupIndex);
+  //   _updateGroup();
+  // }
 
-  void saveGroup(String groupName) async {
-    if (groupName.isEmpty) return;
-    final group = Group(name: groupName, indexGroup: groups.length);
-    await box.add(group);
-  }
+  // void saveGroup(String groupName) async {
+  //   if (groupName.isEmpty) return;
+  //   final group = Group(name: groupName, indexGroup: groups.length);
+  //   await box.add(group);
+  // }
 
-  void _updateGroup() async {
-    int i = 0;
-    await box.clear();
-    for (var element in groups) {
-      await box.add(Group(name: element.name, indexGroup: i, tasks: element.tasks));
-      i++;
-    }
-  }
+  // void _updateGroup() async {
+  //   int i = 0;
+  //   await box.clear();
+  //   for (var element in groups) {
+  //     await box.add(Group(name: element.name, indexGroup: i, tasks: element.tasks));
+  //     i++;
+  //   }
+  // }
 
-  void reorderGroup(int oldIndex, int newIndex) async {
-    if (newIndex > oldIndex) newIndex--;
-    final reorderGroup = _groups.removeAt(oldIndex);
-    _groups.insert(newIndex, reorderGroup);
-    _updateGroup();
-  }
+  // void reorderGroup(int oldIndex, int newIndex) async {
+  //   if (newIndex > oldIndex) newIndex--;
+  //   final reorderGroup = _groups.removeAt(oldIndex);
+  //   _groups.insert(newIndex, reorderGroup);
+  //   _updateGroup();
+  // }
 
   void showTasks(int groupIndex) {
     final groupKey = box.keyAt(groupIndex);

@@ -68,7 +68,7 @@ class _GroupListWidget extends StatelessWidget {
           state: state,
         ),
         itemCount: state.groups.length,
-        onReorder: (oldIndex, newIndex) => context.read<GroupsViewModel>().reorderGroup(oldIndex, newIndex),
+        onReorder: (oldIndex, newIndex) => {},
       ),
     );
   }

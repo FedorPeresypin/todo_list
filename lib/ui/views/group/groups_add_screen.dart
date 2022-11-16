@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list/business_logic/bloc/group_bloc.dart';
+import 'package:todo_list/business_logic/bloc/group_event.dart';
 import 'package:todo_list/business_logic/viewmodels/groups_viewmodel.dart';
 
 class GroupsAddScreen extends StatelessWidget {
@@ -27,7 +29,7 @@ class GroupsAddScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.done),
         onPressed: () {
-          context.read<GroupsViewModel>().saveGroup(controller.text);
+          context.read<GroupBloc>().add(GroupAddEvent(name: controller.text));
           Navigator.of(context).pop();
         },
       ),

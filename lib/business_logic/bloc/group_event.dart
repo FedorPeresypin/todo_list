@@ -1,9 +1,12 @@
 abstract class GroupEvent {}
 
-class GroupAddEvent extends GroupEvent {}
+class GroupAddEvent extends GroupEvent {
+  final String name;
+  GroupAddEvent({required this.name});
+}
 
 class GroupDeleteEvent extends GroupEvent {
-  final indexGroup;
+  final int indexGroup;
   GroupDeleteEvent({required this.indexGroup});
 }
 

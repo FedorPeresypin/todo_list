@@ -10,9 +10,9 @@ class StorageServiceImpl implements StorageService {
   }
 
   @override
-  Future<void> saveGroup(Group group) {
-    // TODO: implement saveGroup
-    throw UnimplementedError();
+  Future<void> saveGroup(Group group) async {
+    final box = await Hive.openBox<Group>('group_box');
+    await box.add(group);
   }
 
   Future<void> deleteGroup(int groupIndex) async {

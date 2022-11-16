@@ -21,24 +21,18 @@ class TodoApp extends StatelessWidget {
           create: (BuildContext context) => GroupBloc()..add(GroupInitialiseEvent()),
         ),
       ],
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => GroupsViewModel()),
-          ChangeNotifierProvider(create: (_) => TaskViewModel()),
-        ],
-        child: MaterialApp(
-          title: 'TODO App',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          initialRoute: '/groups',
-          routes: {
-            '/groups': (context) => const GroupScreen(),
-            '/groups/form': (context) => GroupsAddScreen(),
-            '/groups/tasks': (context) => const TasksScreen(),
-            '/groups/tasks/form': (context) => TaskAddScreen()
-          },
+      child: MaterialApp(
+        title: 'TODO App',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
+        initialRoute: '/groups',
+        routes: {
+          '/groups': (context) => const GroupScreen(),
+          '/groups/form': (context) => GroupsAddScreen(),
+          '/groups/tasks': (context) => const TasksScreen(),
+          '/groups/tasks/form': (context) => TaskAddScreen()
+        },
       ),
     );
   }
