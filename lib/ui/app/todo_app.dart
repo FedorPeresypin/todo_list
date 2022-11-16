@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:todo_list/business_logic/bloc/group_bloc.dart';
 import 'package:todo_list/business_logic/bloc/group_event.dart';
-import 'package:todo_list/business_logic/viewmodels/groups_viewmodel.dart';
-import 'package:todo_list/business_logic/viewmodels/task_viewmodel.dart';
 import 'package:todo_list/ui/views/group/groups_add_screen.dart';
 import 'package:todo_list/ui/views/group/groups_screen.dart';
 import 'package:todo_list/ui/views/task/task_add_screen.dart';

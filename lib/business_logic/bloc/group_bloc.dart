@@ -1,10 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_list/business_logic/bloc/group_event.dart';
-import 'package:todo_list/business_logic/bloc/group_state.dart';
-import 'package:todo_list/business_logic/entity/group.dart';
-import 'package:todo_list/services/storage/storage_service_impl.dart';
+import 'group_event.dart';
+import 'group_state.dart';
+import '../entity/group.dart';
+import '../../services/storage/storage_service_impl.dart';
 
 class GroupBloc extends Bloc<GroupEvent, GroupState> {
   final _groupDataProvider = StorageServiceImpl();

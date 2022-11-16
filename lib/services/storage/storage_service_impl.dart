@@ -1,8 +1,6 @@
-import 'dart:developer';
-
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo_list/business_logic/entity/group.dart';
-import 'package:todo_list/services/storage/storage_service.dart';
+import '../../business_logic/entity/group.dart';
+import 'storage_service.dart';
 
 class StorageServiceImpl implements StorageService {
   @override
@@ -23,11 +21,18 @@ class StorageServiceImpl implements StorageService {
     await box.deleteAt(groupIndex);
   }
 
+  @override
   Future<void> updateGroupList({required List<Group> groupList}) async {
     final box = await Hive.openBox<Group>('group_box');
     await box.clear();
     for (var element in groupList) {
       await box.add(Group(name: element.name));
     }
+  }
+
+  @override
+  Future<void> editGroup({required Group group, required int indexGroup}) async {
+    final box = await Hive.openBox<Group>('group_box');
+    await box.putAt(indexGroup, group);
   }
 }

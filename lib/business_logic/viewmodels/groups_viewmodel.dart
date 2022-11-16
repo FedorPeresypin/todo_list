@@ -41,11 +41,9 @@ class GroupsViewModel with ChangeNotifier {
   // }
 
   void _updateGroup() async {
-    int i = 0;
     await box.clear();
     for (var element in groups) {
       await box.add(Group(name: element.name, tasks: element.tasks));
-      i++;
     }
   }
 
