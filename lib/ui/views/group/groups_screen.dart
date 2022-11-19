@@ -4,6 +4,7 @@ import '../../../business_logic/bloc/group_edit/group_edit_bloc.dart';
 import '../../../business_logic/bloc/group_event.dart';
 import '../../../business_logic/bloc/group_bloc.dart';
 import '../../../business_logic/bloc/group_state.dart';
+import '../../../business_logic/bloc/task_bloc/task_bloc.dart';
 
 class GroupScreen extends StatelessWidget {
   const GroupScreen({super.key});
@@ -134,7 +135,8 @@ class _GroupListRowWidget extends StatelessWidget {
         child: ListTile(
           title: Text(state.groups[index].name),
           onTap: () {
-            // context.read<TaskViewModel>().showTasks(context, group: state.groups[index]);
+            context.read<TaskBloc>().add(TaskInitialiseEvent(indexGroup: index));
+            Navigator.of(context).pushNamed('/groups/tasks');
           },
         ),
       ),

@@ -13,7 +13,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   late List<Task> taskList;
   late int groupId;
   TaskBloc() : super(TaskInitializeState()) {
-    on<TaskInitialiseEven>(
+    on<TaskInitialiseEvent>(
       (event, emit) async {
         emit(TaskLoadingState());
         try {
@@ -27,7 +27,17 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     );
     on<TaskAddEvent>(
       (event, emit) async {
+        if (event.name.isEmpty) return;
         await _taskDataProvider.addTask(task: Task(name: event.name), groupId: groupId);
+        taskList = await _taskDataProvider.getTaskList(groupId: groupId);
+        emit(TaskLoadedState(taskList: taskList));
+      },
+    );
+
+    on<TaskChangeEvent>(
+      (event, emit) async {
+        event.task.changetask();
+        await event.task.save();
         taskList = await _taskDataProvider.getTaskList(groupId: groupId);
         emit(TaskLoadedState(taskList: taskList));
       },
