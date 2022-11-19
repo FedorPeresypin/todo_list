@@ -9,18 +9,27 @@ part 'task_event.dart';
 part 'task_state.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
-  final _groupDataProvider = TaskStorageServiceImplement();
+  final _taskDataProvider = TaskStorageServiceImplement();
   late List<Task> taskList;
+  late int groupId;
   TaskBloc() : super(TaskInitializeState()) {
     on<TaskInitialiseEven>(
       (event, emit) async {
         emit(TaskLoadingState());
         try {
-          taskList = await _groupDataProvider.getTaskList(groupId: event.indexGroup);
+          taskList = await _taskDataProvider.getTaskList(groupId: event.indexGroup);
+          groupId = event.indexGroup;
           taskList.isEmpty ? emit(TaskEmptyState()) : emit(TaskLoadedState(taskList: taskList));
         } catch (e) {
           emit(TaskErrorState());
         }
+      },
+    );
+    on<TaskAddEvent>(
+      (event, emit) async {
+        await _taskDataProvider.addTask(task: Task(name: event.name), groupId: groupId);
+        taskList = await _taskDataProvider.getTaskList(groupId: groupId);
+        emit(TaskLoadedState(taskList: taskList));
       },
     );
   }

@@ -14,18 +14,24 @@ class TasksScreen extends StatelessWidget {
     return BlocBuilder<TaskBloc, TaskState>(
       builder: (context, state) {
         if (state is TaskLoadingState) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
           );
         }
         if (state is TaskEmptyState) {
-          return const Center(
-            child: Text('Task list is empty'),
+          return const Scaffold(
+            body: Center(
+              child: Text('Task list is empty'),
+            ),
           );
         }
         if (state is TaskErrorState) {
-          return const Center(
-            child: Text('Error'),
+          return const Scaffold(
+            body: Center(
+              child: Text('Error'),
+            ),
           );
         }
         if (state is TaskLoadedState) {
