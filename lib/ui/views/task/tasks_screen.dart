@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_list/business_logic/entity/task.dart';
-
+import '../../../business_logic/entity/task.dart';
 import '../../../business_logic/bloc/task_bloc/task_bloc.dart';
 
 class TasksScreen extends StatelessWidget {

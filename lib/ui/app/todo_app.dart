@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_list/business_logic/bloc/group_bloc.dart';
-import 'package:todo_list/business_logic/bloc/group_event.dart';
-import 'package:todo_list/ui/views/group/groups_add_screen.dart';
-import 'package:todo_list/ui/views/group/groups_screen.dart';
-import 'package:todo_list/ui/views/task/task_add_screen.dart';
-import 'package:todo_list/ui/views/task/tasks_screem.dart';
 
-import '../../business_logic/bloc/group_edit/group_edit_bloc.dart';
-import '../../business_logic/bloc/task_bloc/task_bloc.dart';
+import '../views/group/groups_add_screen.dart';
+import '../views/group/groups_screen.dart';
 import '../views/group/group_edit_screen.dart';
+import '../views/task/task_add_screen.dart';
+import '../views/task/tasks_screen.dart';
+import '../../business_logic/bloc/group_bloc/group_bloc.dart';
+import '../../business_logic/bloc/group_edit_bloc/group_edit_bloc.dart';
+import '../../business_logic/bloc/task_bloc/task_bloc.dart';
 
 class TodoApp extends StatelessWidget {
   const TodoApp({super.key});

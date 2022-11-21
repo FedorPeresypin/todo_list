@@ -1,4 +1,4 @@
-import '../entity/group.dart';
+part of 'group_bloc.dart';
 
 abstract class GroupState {}
 

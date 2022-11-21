@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../business_logic/bloc/group_edit/group_edit_bloc.dart';
-import '../../../business_logic/bloc/group_event.dart';
-import '../../../business_logic/bloc/group_bloc.dart';
-import '../../../business_logic/bloc/group_state.dart';
+
+import '../../../business_logic/bloc/group_bloc/group_bloc.dart';
+import '../../../business_logic/bloc/group_edit_bloc/group_edit_bloc.dart';
 import '../../../business_logic/bloc/task_bloc/task_bloc.dart';
 
 class GroupScreen extends StatelessWidget {

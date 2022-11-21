@@ -1,3 +1,5 @@
+part of 'group_bloc.dart';
+
 abstract class GroupEvent {}
 
 class GroupAddEvent extends GroupEvent {
