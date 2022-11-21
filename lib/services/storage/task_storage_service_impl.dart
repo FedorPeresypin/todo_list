@@ -29,4 +29,25 @@ class TaskStorageServiceImplement implements TaskStorageService {
     }
     return throw UnimplementedError();
   }
+
+  Future<void> deleteTask({required int taskIndex, required int groupId}) async {
+    final box = await Hive.openBox<Group>('group_box');
+    final boxTask = await Hive.openBox<Task>('task_box');
+    final group = box.getAt(groupId);
+    if (group != null) {
+      group.tasks ??= HiveList(boxTask);
+      await group.tasks![taskIndex].delete();
+      await group.save();
+    }
+  }
+
+  Future<void> updateTaskList({required List<Task> taskList, required int groupId}) async {
+    final box = await Hive.openBox<Group>('group_box');
+    final boxTask = await Hive.openBox<Task>('task_box');
+    final group = box.getAt(groupId);
+    if (group != null) {
+      group.tasks = HiveList(boxTask, objects: taskList);
+      await group.save();
+    }
+  }
 }

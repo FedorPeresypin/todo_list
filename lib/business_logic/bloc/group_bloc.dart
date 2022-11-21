@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'group_event.dart';
 import 'group_state.dart';
@@ -46,8 +47,9 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
         if (newIndex > oldIndex) newIndex--;
         final reorderGroup = groupList.removeAt(oldIndex);
         groupList.insert(newIndex, reorderGroup);
+        await _groupDataProvider.updateGroupList(groupList: groupList);
+        groupList = await _groupDataProvider.getGroups();
         emit(GroupLoadedState(groups: groupList));
-        _groupDataProvider.updateGroupList(groupList: groupList);
       },
     );
   }

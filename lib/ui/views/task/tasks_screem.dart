@@ -61,12 +61,14 @@ class _TaskListWidget extends StatelessWidget {
         canvasColor: Colors.transparent,
         shadowColor: Colors.transparent,
       ),
-      child: ListView.builder(
+      child: ReorderableListView.builder(
         itemBuilder: (context, index) => _TaskListRowWidget(
-          key: Key(index.toString()),
+          key: ValueKey(index),
           task: state.taskList[index],
+          index: index,
         ),
         itemCount: state.taskList.length,
+        onReorder: (oldIndex, newIndex) => context.read<TaskBloc>().add(TaskReorderEvent(oldIndex: oldIndex, newIndex: newIndex)),
       ),
     );
   }
@@ -74,12 +76,13 @@ class _TaskListWidget extends StatelessWidget {
 
 class _TaskListRowWidget extends StatelessWidget {
   final Task task;
-  const _TaskListRowWidget({Key? key, required this.task}) : super(key: key);
+  final int index;
+  const _TaskListRowWidget({Key? key, required this.task, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: UniqueKey(),
+      key: ObjectKey(task),
       secondaryBackground: Padding(
         padding: const EdgeInsets.all(3.0),
         child: Container(
@@ -118,7 +121,9 @@ class _TaskListRowWidget extends StatelessWidget {
           ),
         ),
       ),
-      onDismissed: (direction) => {},
+      onDismissed: (direction) => {
+        context.read<TaskBloc>().add(TaskDeleteEvent(taskIndex: index)),
+      },
       child: Card(
         child: ListTile(
           title: Text(task.name),

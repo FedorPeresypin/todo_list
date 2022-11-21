@@ -16,3 +16,14 @@ class TaskChangeEvent extends TaskEvent {
   Task task;
   TaskChangeEvent({required this.task});
 }
+
+class TaskDeleteEvent extends TaskEvent {
+  int taskIndex;
+  TaskDeleteEvent({required this.taskIndex});
+}
+
+class TaskReorderEvent extends TaskEvent {
+  int oldIndex;
+  int newIndex;
+  TaskReorderEvent({required this.oldIndex, required this.newIndex});
+}

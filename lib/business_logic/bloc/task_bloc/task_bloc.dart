@@ -42,5 +42,25 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         emit(TaskLoadedState(taskList: taskList));
       },
     );
+
+    on<TaskDeleteEvent>(
+      (event, emit) async {
+        await _taskDataProvider.deleteTask(taskIndex: event.taskIndex, groupId: groupId);
+        taskList = await _taskDataProvider.getTaskList(groupId: groupId);
+        emit(TaskLoadedState(taskList: taskList));
+      },
+    );
+
+    on<TaskReorderEvent>(
+      (event, emit) {
+        var newIndex = event.newIndex;
+        var oldIndex = event.oldIndex;
+        if (newIndex > oldIndex) newIndex--;
+        final reorderTask = taskList.removeAt(oldIndex);
+        taskList.insert(newIndex, reorderTask);
+        emit(TaskLoadedState(taskList: taskList));
+        _taskDataProvider.updateTaskList(taskList: taskList, groupId: groupId);
+      },
+    );
   }
 }

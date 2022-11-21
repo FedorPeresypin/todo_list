@@ -60,7 +60,7 @@ class _GroupListWidget extends StatelessWidget {
       ),
       child: ReorderableListView.builder(
         itemBuilder: (context, index) => _GroupListRowWidget(
-          key: Key('$index'),
+          key: ValueKey(index),
           index: index,
           state: state,
         ),
@@ -79,7 +79,7 @@ class _GroupListRowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: UniqueKey(),
+      key: ObjectKey(state.groups[index]),
       secondaryBackground: Padding(
         padding: const EdgeInsets.all(3.0),
         child: Container(

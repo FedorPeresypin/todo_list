@@ -26,7 +26,7 @@ class StorageServiceImpl implements StorageService {
     final box = await Hive.openBox<Group>('group_box');
     await box.clear();
     for (var element in groupList) {
-      await box.add(Group(name: element.name));
+      await box.add(Group(name: element.name, tasks: element.tasks));
     }
   }
 
